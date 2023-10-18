@@ -45,6 +45,7 @@ const Form = () => {
     control,
     name: "photos",
   });
+  console.log(fields);
 
   const onFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -100,7 +101,7 @@ const Form = () => {
           defaultValue=""
           render={({ field }) => <input type="text" id="title" {...field} />}
         />
-        {errors.title && <p>{errors.title.message}</p>}
+        {errors.title && <p style={{ color: "red" }}>{errors.title.message}</p>}
       </div>
 
       <div>
@@ -111,7 +112,9 @@ const Form = () => {
           defaultValue=""
           render={({ field }) => <textarea id="description" {...field} />}
         />
-        {errors.description && <p>{errors.description.message}</p>}
+        {errors.description && (
+          <p style={{ color: "red" }}>{errors.description.message}</p>
+        )}
       </div>
 
       {fields.map((item, index) => (
