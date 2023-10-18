@@ -35,7 +35,7 @@ const Form = () => {
     defaultValues: {
       title: "",
       description: "",
-      photos: [{ file: undefined }],
+      photos: [{}],
     },
   });
 
@@ -116,10 +116,19 @@ const Form = () => {
           <p style={{ color: "red" }}>{errors.description.message}</p>
         )}
       </div>
+      
+      <button
+        type="button"
+        onClick={() => {
+          append({ file: new File([], "") });
+        }}
+      >
+        Add Photo
+      </button>
 
       {fields.map((item, index) => (
         <div key={item.id}>
-          {item.file && (
+          {item.file instanceof File && (
             <>
               <label htmlFor={`photo-${index}`}>Photo {index + 1}:</label>
               <input

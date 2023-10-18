@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const { config } = require("dotenv");
 const cors = require("cors");
+const path = require("path");
+
 config();
 
 const app = express();
@@ -17,11 +19,10 @@ mongoose.connect(process.env.MONGODB_URL, {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // Define the directory where uploaded files will be stored
-    cb(null, "images/");
+    const absolutePath = path.join(__dirname, "images"); // Ensure 'path' is imported
+    cb(null, absolutePath);
   },
   filename: (req, file, cb) => {
-    // Define how uploaded files should be named
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(
       null,
@@ -46,6 +47,7 @@ const upload = multer({
 const Listing = mongoose.model("Listing", {
   title: String,
   description: String,
+  photos: [String],
 });
 
 app.post("/api/listings", upload.array("photos", 5), async (req, res) => {
